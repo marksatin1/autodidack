@@ -28,7 +28,7 @@ export default function BackgroundCarousel({ images }: { images: Photo[] }) {
             className={`absolute object-fill w-full h-full ${
               i === current ? "bg-fade" : "opacity-0"
             }`}
-            priority
+            priority={i === 0}
           />
         );
       })}

@@ -30,6 +30,24 @@ export type ToggleStates = {
 };
 
 export type ToggleAction = {
-  type: string;
-  section: string;
+  type: "TOGGLE";
+  section: "aboutMe" | "aboutSite" | "aboutPhotos";
+};
+
+// export type GalleryNavStates = {
+//   current: number;
+//   prev?: number;
+//   next?: number;
+//   currentAnimation: string;
+//   prevAnimation?: string;
+//   nextAnimation?: string;
+// };
+
+export type GalleryNavPhotoState = {
+  index: number;
+  animation: string;
+};
+
+export type GalleryNavAction = {
+  type: "NEXT" | "PREV";
 };

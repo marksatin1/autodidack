@@ -24,7 +24,7 @@ export default function RootLayout({
       )}
 
       {pathname !== "/" && (
-        <body className="h-screen grid grid-rows-layout overflow-hidden">
+        <body className="h-screen grid grid-rows-layout">
           <header className="w-full grid justify-center items-center p-4">
             <Logo />
           </header>

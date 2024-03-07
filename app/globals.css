@@ -241,3 +241,71 @@
     margin-left: 110px;
   }
 }
+
+.rotate-out-right {
+  animation: rotate-out-right 1s forwards;
+}
+
+.rotate-out-left {
+  animation: rotate-out-left 1s forwards;
+}
+
+.rotate-in-right {
+  animation: rotate-in-right 1s forwards;
+}
+
+.rotate-in-left {
+  animation: rotate-in-left 1s forwards;
+}
+
+@keyframes rotate-out-right {
+  from {
+    transform: perspective(2000px) rotateY(0deg) translateX(0%);
+    opacity: 1;
+  }
+  to {
+    transform: perspective(2000px) rotateY(-25deg) translateX(20%);
+    opacity: 0;
+  }
+}
+
+@keyframes rotate-in-left {
+  from {
+    transform: perspective(2000px) rotateY(25deg) translateX(-20%);
+    opacity: 0;
+  }
+  to {
+    transform: perspective(2000px) rotateY(0deg) translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes rotate-out-left {
+  from {
+    transform: perspective(2000px) rotateY(0deg) translateX(0%);
+    opacity: 1;
+  }
+  to {
+    transform: perspective(2000px) rotateY(25deg) translateX(-20%);
+    opacity: 0;
+  }
+}
+
+@keyframes rotate-in-right {
+  from {
+    transform: perspective(2000px) rotateY(-25deg) translateX(20%);
+    opacity: 0;
+  }
+  to {
+    transform: perspective(2000px) rotateY(0deg) translateX(0%);
+    opacity: 1;
+  }
+}
+
+.transition-opacity {
+  transition-property: opacity;
+}
+
+.duration-1000 {
+  transition-duration: 1s;
+}

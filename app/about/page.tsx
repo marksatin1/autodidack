@@ -13,9 +13,9 @@ const initToggleStates = {
   aboutPhotos: false,
 };
 
-function reducer(state: ToggleStates, action: ToggleAction) {
+function toggleReducer(state: ToggleStates, action: ToggleAction) {
   switch (action.type) {
-    case "toggle":
+    case "TOGGLE":
       return { ...state, [action.section]: !state[action.section] };
     default:
       return state;
@@ -23,7 +23,7 @@ function reducer(state: ToggleStates, action: ToggleAction) {
 }
 
 export default function Page() {
-  const [state, dispatch] = useReducer(reducer, initToggleStates);
+  const [state, dispatch] = useReducer(toggleReducer, initToggleStates);
 
   return (
     <main className="h-full p-6 lg:grid lg:grid-cols-6 lg:overflow-auto lg:grid-rows-2 lg:grid-template-areas='profile abouts contact abouts'">
@@ -55,7 +55,7 @@ export default function Page() {
         className="bsp lg:col-span-4 lg:overflow-auto h-[700px] px-16 py-8 lg:grid-area:abouts"
       >
         <div
-          onClick={() => dispatch({ type: "toggle", section: "aboutMe" })}
+          onClick={() => dispatch({ type: "TOGGLE", section: "aboutMe" })}
           className="flex items-center justify-center gap-6 mx-auto cursor-pointer"
         >
           <FontAwesomeIcon icon={state.aboutMe ? faAngleUp : faAngleDown} size="2x" />
@@ -131,7 +131,7 @@ export default function Page() {
         </p>
 
         <div
-          onClick={() => dispatch({ type: "toggle", section: "aboutSite" })}
+          onClick={() => dispatch({ type: "TOGGLE", section: "aboutSite" })}
           className="flex items-center justify-center  gap-6 mx-auto cursor-pointer"
         >
           <FontAwesomeIcon icon={state.aboutSite ? faAngleUp : faAngleDown} size="2x" />
@@ -146,7 +146,7 @@ export default function Page() {
           <br />
         </p>
         <div
-          onClick={() => dispatch({ type: "toggle", section: "aboutPhotos" })}
+          onClick={() => dispatch({ type: "TOGGLE", section: "aboutPhotos" })}
           className="flex items-center justify-center  gap-6 mx-auto cursor-pointer"
         >
           <FontAwesomeIcon icon={state.aboutPhotos ? faAngleUp : faAngleDown} size="2x" />
