@@ -43,9 +43,14 @@ export type ToggleAction = {
 //   nextAnimation?: string;
 // };
 
-export type GalleryNavPhotoState = {
+export type GalleryNavState = {
+  photos: GalleryPhotoState[];
+  current: number;
+}
+
+export type GalleryPhotoState = {
   index: number;
-  animation: string;
+  transition: string;
 };
 
 export type GalleryNavAction = {

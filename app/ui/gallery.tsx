@@ -13,54 +13,34 @@
 
 import { Photo } from "@/app/lib/definitions";
 import Image from "next/image";
-import { useRef, useEffect, useReducer } from "react";
-import { GalleryNavStates, GalleryNavAction } from "@/app/lib/definitions";
+import { useRef, useEffect, useState } from "react";
 import { KeyboardEvent } from "react";
+import { rotatePhotosLeft, rotatePhotosRight } from "../lib/utils";
 
 export default function Gallery({ photos }: { photos: Photo[] }) {
-  const [navStates, dispatch] = useReducer(galleryNavReducer, {
-    current: 0,
-    prev: photos.length - 1,
-    currentAnimation: "",
-    prevAnimation: "",
-  });
+  const [photoArr, setPhotoArr] = useState<Photo[]>(photos);
+  const [currentIdx, setCurrentIdx] = useState<number>(0);
+  const [lastKey, setLastKey] = useState<string>("");
   const mainRef = useRef<HTMLDivElement>(null);
 
   // Focus to <main> when component mounts
   useEffect(() => {
     mainRef.current?.focus();
-    console.log(photos);
   }, []);
-
-  function galleryNavReducer(state: GalleryNavStates, action: GalleryNavAction) {
-    switch (action.type) {
-      case "PREV":
-        return {
-          current: state.current === 0 ? photos.length - 1 : state.current - 1,
-          prev: state.current,
-
-          currentAnimation: "rotate-out-left",
-          prevAnimation: "rotate-in-right",
-        };
-      case "NEXT":
-        return {
-          current: state.current === photos.length - 1 ? 0 : state.current + 1,
-          prev: state.current,
-          currentAnimation: "rotate-out-right",
-          prevAnimation: "rotate-in-left",
-        };
-      default:
-        return state;
-    }
-  }
 
   function handleKeyDown(e: KeyboardEvent) {
     switch (e.key) {
       case "ArrowLeft":
-        dispatch({ type: "PREV" });
+        let rightShiftArr = rotatePhotosRight(photoArr);
+        setPhotoArr(rightShiftArr);
+        setCurrentIdx(prev => (prev - 1 + photoArr.length) % photoArr.length);
+        setLastKey("ArrowLeft");
         break;
       case "ArrowRight":
-        dispatch({ type: "NEXT" });
+        let leftShiftArr = rotatePhotosLeft(photoArr);
+        setPhotoArr(leftShiftArr);
+        setCurrentIdx(prev => (prev + 1) % photoArr.length);
+        setLastKey("ArrowRight");
         break;
       default:
         console.log("Some other key was pressed.");
@@ -75,7 +55,12 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
       className="p-4 outline-none w-full h-full flex items-center justify-center"
     >
       <div className="bsp relative w-full h-full flex items-center justify-center">
-        {photos.map((p: Photo, i: number) => {
+        {photoArr.map((p: Photo, i: number) => {
+          let animationClass = "";
+          if (i === currentIdx) {
+            animationClass = lastKey === "ArrowLeft" ? "rotate-out-right" : "";
+          }
+
           return (
             <Image
               key={p.id}
@@ -84,12 +69,8 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
               height={p.height}
               alt={p.description}
               className={`object-contain layout-responsive w-[200px] max-h-full max-w-full ${
-                i === navStates.current
-                  ? `${navStates.currentAnimation} block`
-                  : i === navStates.prev
-                  ? `${navStates.prevAnimation} hidden`
-                  : "hidden"
-              }`}
+                i === 0 ? "block" : "hidden"
+              } ${animationClass}`}
               priority={i === 0}
             />
           );
