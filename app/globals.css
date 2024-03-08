@@ -301,11 +301,3 @@
     opacity: 1;
   }
 }
-
-.transition-opacity {
-  transition-property: opacity;
-}
-
-.duration-1000 {
-  transition-duration: 1s;
-}
